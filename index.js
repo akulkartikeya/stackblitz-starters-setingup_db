@@ -1,4 +1,6 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const env = require("dotenv").config();
 const { resolve } = require('path');
 
 const app = express();
@@ -13,3 +15,12 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
+
+app.listen(async(req,res)=>{
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("Connected to database");
+  } catch (error) {
+    console.log("Error connecting to database");
+  }
+})
